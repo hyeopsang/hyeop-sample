@@ -10,6 +10,7 @@ export const getCommentById = (postId: number) => createApiRequester.get(`/`, {
 export const deleteCommentById = (postId: number) => createApiRequester.delete(`/`, {
     params: { postId }
   });
+
 export const createComment = (data: any) => createApiRequester.post('/', data);
 export const updateComment = (id: number, data: any) => createApiRequester.put(`/${id}`, data);
 export const deleteComment = (id: number) => createApiRequester.delete(`/${id}`);

@@ -1,6 +1,19 @@
 import { getPosts } from "@/../../app/_actions/posts/post";
 import Link from "next/link";
 import { Posts } from "../../../types/types";
+import { FormattedDate } from "./formattedDate";
+
+function formatDate(dateString: number) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+  
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+}
+
 export default async function Post() {
     try {
         const response = await getPosts();
@@ -12,7 +25,7 @@ export default async function Post() {
 
         return (
             <>
-                {posts.map(post => (
+                {posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map(post => (
                     <Link key={post.id} href={`/postdetail/${post.id}`}>
                         <div className="w-full flex justify-between gap-8 px-6 py-4 bg-gradient-to-r from-[#C9E5FF]/80 via-[#C9E5FF]/65 to-[#C9E5FF]/80 rounded-[15px] hover:bg-[#C9E5FF] cursor-pointer">
                         <p className="font-bold w-3/4 truncate bg-gradient-to-b from-[#296399] via-[#296399]/80 to-[#296399]/50 text-transparent bg-clip-text">
@@ -23,7 +36,7 @@ export default async function Post() {
                                 {post.author}
                             </p>
                             <p className="text-[#658CAF] whitespace-nowrap">
-                                {post.date}
+                                {FormattedDate(post.date).slice(0, 10)}
                             </p>
                         </div>
                     </div>
