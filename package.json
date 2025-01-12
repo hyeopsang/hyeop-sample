@@ -5,15 +5,37 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky install",
+    "json-server": "json-server --watch db.json --port 3001"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.10.5",
+    "husky": "^9.1.7",
+    "json-server": "1.0.0-beta.3",
+    "lint-staged": "^15.3.0",
+    "prettier": "^3.3.3",
     "turbo": "^2.3.3",
     "typescript": "5.5.4"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "package.json": [
+      "pnpm lint:package"
+    ]
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "next": "15.1.4"
   }
 }

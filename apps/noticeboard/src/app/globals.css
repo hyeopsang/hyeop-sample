@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.font-pretendard {
+  font-family: var(--font-pretendard);
+}
