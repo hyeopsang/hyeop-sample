@@ -1,5 +1,5 @@
 'use client'
-import { deleteComment } from "@/app/lib/api/comments";
+import { deleteComment } from "@/../../app/_actions/comments/comments";
 export default function CommentDelete({ id }: { id: number }) {
     const handleDelete = async () => {
         try {

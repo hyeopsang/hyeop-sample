@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { createPost } from "@/app/lib/api/post";
+import { createPost } from '@/../../app/_actions/posts/post';
 
 export async function CreatePost(prevState: any, formData: FormData) {
     const today = new Date();

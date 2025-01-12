@@ -1,6 +1,6 @@
 'use client'
-import { deletePost } from "@/app/lib/api/post";
-import { deleteCommentById } from "@/app/lib/api/comments";
+import { deletePost } from "@/../../app/_actions/posts/post";
+import { deleteCommentById } from "@/../../app/_actions/comments/comments";
 import { useRouter } from "next/navigation";
 
 export default function PostDelete ({ id } : { id: number }) {

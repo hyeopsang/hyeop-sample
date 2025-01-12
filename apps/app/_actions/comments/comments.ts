@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from "axios";
-import { Posts } from "@/app/types/types";
 export const createApiRequester : AxiosInstance = axios.create({
     baseURL: `http://localhost:3001/comments`,
 });

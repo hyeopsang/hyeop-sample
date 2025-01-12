@@ -1,5 +1,5 @@
-import { getPostById } from '@/app/lib/api/post';
-import { getCommentById } from "@/app/lib/api/comments";
+import { getPostById } from '@/../../app/_actions/posts/post';
+import { getCommentById } from "@/../../app/_actions/comments/comments";
 import CommentWriteForm from './comments/_components/commentWrite-form';
 import { Posts, Comments } from '@/app/types/types';
 import CommentContent from './comments/_components/commentContent';

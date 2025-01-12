@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { createComment } from "@/app/lib/api/comments";
+import { createComment } from "@/../../app/_actions/comments/comments";
 
 export async function CreateComment(state: {message: string}, formData: FormData) {
     const today = new Date();
