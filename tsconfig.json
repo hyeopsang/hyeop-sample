@@ -1,0 +1,3 @@
+{
+  "extends": "@nettee-sample/typescript-config/base.json"
+}

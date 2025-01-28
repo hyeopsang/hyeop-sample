@@ -1,41 +1,31 @@
 {
-  "name": "sanghyeop-sample",
+  "name": "shadcn-ui-monorepo",
+  "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install",
-    "json-server": "json-server --watch db.json --port 3001"
+    "postinstall": "corepack enable",
+    "prepare": "husky",
+    "lint-staged": "lint-staged",
+    "commitlint": "commitlint"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.10.5",
+    "@nettee-sample/eslint-config": "workspace:*",
+    "@nettee-sample/typescript-config": "workspace:*",
     "husky": "^9.1.7",
-    "json-server": "1.0.0-beta.3",
     "lint-staged": "^15.3.0",
-    "prettier": "^3.3.3",
-    "turbo": "^2.3.3",
+    "prettier": "^3.2.5",
+    "turbo": "^2.3.0",
     "typescript": "5.5.4"
   },
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@9.12.3",
   "engines": {
-    "node": ">=18"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
-    ],
-    "package.json": [
-      "pnpm lint:package"
-    ]
-  },
-  "dependencies": {
-    "axios": "^1.7.9",
-    "next": "15.1.4"
+    "node": ">=20"
   }
 }
