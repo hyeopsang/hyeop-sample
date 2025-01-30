@@ -2,6 +2,7 @@ import { getPostById, getComment } from "@/app/_actions/post";
 import CommentWriteForm from "./comments/_components/commentWrite-form";
 import CommentContent from "./comments/_components/commentContent";
 import PostDelete from "./_components/postDelete";
+import PostModify from "./_components/postModify";
 import { FormattedDate } from "@/app/_components/formattedDate";
 import { Post, Comment } from "@/app/types/index";
 
@@ -32,7 +33,10 @@ export default async function PostDetail({ params }: Props) {
               게시일 : <FormattedDate date={post.createdAt} />
             </p>
           </div>
-          <PostDelete id={post.id} />
+          <div className="flex justify-end gap-[15px]">
+            <PostModify id={post.id} />
+            <PostDelete id={post.id} />
+          </div>
         </div>
         <div className="w-full text-[#e5e0d1] px-2">{post.content}</div>
         <div className="w-full">

@@ -1,6 +1,6 @@
 import "@nettee-sample/ui/globals.css";
 
-import localFont from 'next/font/local';
+import localFont from "next/font/local";
 import { Metadata } from "next";
 import Header from "./_components/header";
 import { Providers } from "@/components/providers";
@@ -25,9 +25,9 @@ export default function RootLayout({
     <html lang="ko" className={`${pretendard.variable}`}>
       <body className="font-pretendard bg-[#4A7DFF] flex flex-wrap">
         <header>
-          <Header/>
+          <Header />
         </header>
-          {children}
+        {children}
       </body>
     </html>
   );
