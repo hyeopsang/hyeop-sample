@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { CreatePost } from "../_action/createPost";
 import { useActionState } from "react";
 import { useEffect } from "react";
-import WriteForm from "@/app/_components/writeForm";
+import WriteForm from "@/app/_components/WriteForm";
 
 const initialState = {
   message: "",

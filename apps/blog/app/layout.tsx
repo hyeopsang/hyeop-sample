@@ -2,7 +2,7 @@ import "@nettee-sample/ui/globals.css";
 
 import localFont from "next/font/local";
 import { Metadata } from "next";
-import Header from "./_components/header";
+import Header from "./_components/Header";
 import { Providers } from "@/components/providers";
 
 const pretendard = localFont({

@@ -1,4 +1,4 @@
-import Modify from "./_components/modify";
+import Modify from "./_components/Modify";
 interface Props {
   params: Promise<{
     id: string;

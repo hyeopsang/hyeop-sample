@@ -1,8 +1,8 @@
 import { getPostById, getComment } from "@/app/_actions/post";
 import CommentWriteForm from "./comments/_components/commentWrite-form";
 import CommentContent from "./comments/_components/commentContent";
-import PostDelete from "./_components/postDelete";
-import PostModify from "./_components/postModify";
+import PostDelete from "./_components/PostDelete";
+import PostModify from "./_components/PostModify";
 import { FormattedDate } from "@/app/_components/formattedDate";
 import { Post, Comment } from "@/app/types/index";
 

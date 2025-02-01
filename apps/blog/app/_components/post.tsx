@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getPosts } from "@/app/_actions/post";
 import Link from "next/link";
 import { FormattedDate } from "@/app/_components/formattedDate";
-import Pagination from "@/app/_components/pagination";
+import Pagination from "@/app/_components/Pagination";
 import { useSearchParams } from "next/navigation";
 import { Post } from "@/app/types";
 
