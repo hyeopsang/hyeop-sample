@@ -1,17 +1,16 @@
-interface FormProps {
-  onSubmit: (formData: FormData) => void; // FormData 타입으로 변경
-  state: {
-    message: string;
-  };
-  initialData?: {
-    id: string;
-    title: string;
-    content: string;
-    author: string;
-  };
-}
+import { useTransition } from "react";
 
-export default function WriteForm({ onSubmit, state, initialData }: FormProps) {
+export default function WriteForm({
+  onSubmit,
+  state,
+  initialData,
+}: {
+  onSubmit: (data: FormData) => void;
+  state: { message: string; success: boolean };
+  initialData?: { id: string; title: string; content: string; author: string };
+}) {
+  const [isPending, startTransition] = useTransition();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -19,7 +18,10 @@ export default function WriteForm({ onSubmit, state, initialData }: FormProps) {
     if (initialData?.id) {
       formData.append("id", initialData.id);
     }
-    onSubmit(formData);
+
+    startTransition(() => {
+      onSubmit(formData);
+    });
   };
 
   return (
@@ -51,9 +53,14 @@ export default function WriteForm({ onSubmit, state, initialData }: FormProps) {
         />
         <button
           type="submit"
-          className="bg-gradient-to-b from-[#C9E5FF]/80 via-[#C9E5FF]/65 to-[#C9E5FF]/80 hover:bg-[#C9E5FF] text-[#658CAF] hover:text-[#296399] py-2 px-4 rounded-[13px]"
+          disabled={isPending}
+          className={`bg-gradient-to-b from-[#C9E5FF]/80 via-[#C9E5FF]/65 to-[#C9E5FF]/80 
+            hover:bg-[#C9E5FF] text-[#658CAF] hover:text-[#296399] py-2 px-4 
+            rounded-[13px] transition ${
+              isPending ? "opacity-50 cursor-not-allowed" : ""
+            }`}
         >
-          작성 완료
+          {isPending ? "작성 중..." : "작성 완료"}
         </button>
       </div>
       <p className="w-full text-center text-white font-bold" aria-live="polite">
