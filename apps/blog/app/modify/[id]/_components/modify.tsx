@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import WriteForm from "@/app/_components/WriteForm";
+import WriteForm from "@/app/_components/writeForm";
 import { UpdatePost } from "../_action/updatePost";
 import { useActionState } from "react";
 import { getPostById } from "@/app/_actions/post";
