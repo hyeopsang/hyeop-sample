@@ -21,10 +21,10 @@ const apiRequest = (
 export const getPostById = (id: string, options?: AxiosRequestConfig) =>
   apiRequest("GET", `/posts/${id}`, options);
 
-export const getPosts = (page?: number, limit?: number) =>
-  apiRequest("GET", "/posts/paginated", {
+export const getPosts = (cursor?: string, limit?: number) =>
+  apiRequest("GET", "/posts/infinite", {
     params: {
-      page,
+      cursor,
       limit,
     },
   });

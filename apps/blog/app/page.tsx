@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Post from "@/app/_components/Post";
+import Post from "@/app/_components/PostList";
 export default function Page() {
   return (
     <div className="w-[800px] h-[70px] flex flex-wrap mx-auto bg-[#4A7DFF]">

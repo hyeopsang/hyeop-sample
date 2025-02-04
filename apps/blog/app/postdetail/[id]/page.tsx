@@ -6,13 +6,11 @@ import PostModify from "./_components/PostModify";
 import { FormattedDate } from "@/app/_components/formattedDate";
 import { Post, Comment } from "@/app/types/index";
 
-interface Props {
-  params: Promise<{
-    id: string;
-  }>;
-}
-
-export default async function PostDetail({ params }: Props) {
+export default async function PostDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
 
   try {

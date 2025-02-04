@@ -5,16 +5,13 @@ import WriteForm from "@/app/_components/WriteForm";
 import { UpdatePost } from "../_action/updatePost";
 import { useActionState } from "react";
 import { getPostById } from "@/app/_actions/post";
-interface Props {
-  params: { id: string };
-}
 
 const initialState = {
   message: "",
   success: false,
 };
 
-export default function PostModify({ params }: Props) {
+export default function PostModify({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [state, formAction] = useActionState(UpdatePost, initialState);
   const [initialData, setInitialData] = useState({
