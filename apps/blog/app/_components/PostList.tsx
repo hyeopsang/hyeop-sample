@@ -10,22 +10,26 @@ export default function PostList() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [cursor, setCursor] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [hasMore, setHasMore] = useState<boolean>(true); // 더 가져올 데이터가 있는지 여부
-  const observerRef = useRef<HTMLDivElement | null>(null);
-  const observerInstance = useRef<IntersectionObserver | null>(null);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const observerTarget = useRef<HTMLDivElement | null>(null);
 
   const fetchPosts = useCallback(async () => {
-    if (!hasMore || isLoading) return; // 중복 요청 방지
+    if (!hasMore || isLoading) return;
 
     setIsLoading(true);
     try {
       const response = await getPosts(cursor, 15);
       const newPosts = response.data.data;
 
-      setPosts((prev) => [...prev, ...newPosts]); // 기존 게시물에 추가
-      setCursor(response.data.nextCursor); // 다음 커서 업데이트
+      setPosts((prev) => {
+        const uniquePosts = [...prev, ...newPosts].filter(
+          (post, index, self) =>
+            index === self.findIndex((p) => p.id === post.id),
+        );
+        return uniquePosts;
+      });
+      setCursor(response.data.nextCursor);
 
-      // 다음 커서가 없으면 더 이상 불러오지 않도록 설정
       if (!response.data.nextCursor) {
         setHasMore(false);
       }
@@ -41,24 +45,21 @@ export default function PostList() {
   }, []);
 
   useEffect(() => {
-    if (!observerRef.current || !hasMore) return;
-
-    if (observerInstance.current) {
-      observerInstance.current.disconnect();
-    }
-
-    observerInstance.current = new IntersectionObserver(
+    if (!hasMore) return;
+    const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting) {
+        if (entries[0]?.isIntersecting && hasMore) {
           fetchPosts();
         }
       },
       { threshold: 1.0 },
     );
 
-    observerInstance.current.observe(observerRef.current);
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+    }
 
-    return () => observerInstance.current?.disconnect();
+    return () => observer.disconnect();
   }, [fetchPosts, hasMore]);
 
   if (posts.length === 0 && isLoading) {
@@ -97,8 +98,7 @@ export default function PostList() {
             </div>
           </Link>
         ))}
-      {/* 무한 스크롤 트리거 요소 */}
-      <div ref={observerRef} className="h-10"></div>
+      <div ref={observerTarget} className="w-full h-10"></div>
       {isLoading && (
         <p className="w-full py-10 text-center text-white text-xl">
           로딩 중...
