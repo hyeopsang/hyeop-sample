@@ -21,12 +21,17 @@ const apiRequest = (
 export const getPostById = (id: string, options?: AxiosRequestConfig) =>
   apiRequest("GET", `/posts/${id}`, options);
 
-export const getPosts = (cursor?: string, limit?: number) =>
+export const getPosts = (
+  cursor: string | null,
+  limit?: number,
+  options?: AxiosRequestConfig,
+) =>
   apiRequest("GET", "/posts/infinite", {
     params: {
       cursor,
       limit,
     },
+    ...options,
   });
 
 export const createPost = (data: CreatePostDTO, options?: AxiosRequestConfig) =>

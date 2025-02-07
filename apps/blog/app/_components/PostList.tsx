@@ -4,51 +4,45 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { getPosts } from "@/app/_actions/post";
 import Link from "next/link";
 import { FormattedDate } from "@/app/_components/formattedDate";
-import { Post } from "@/app/types";
+import { Post, CursorPaginationResponse } from "@/app/types";
 
 export default function PostList() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [cursor, setCursor] = useState<string | undefined>();
+  const [cursor, setCursor] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const observerTarget = useRef<HTMLDivElement | null>(null);
 
-  const fetchPosts = useCallback(async () => {
+  const fetchPosts = async () => {
     if (!hasMore || isLoading) return;
-
-    setIsLoading(true);
     try {
       const response = await getPosts(cursor, 15);
-      const newPosts = response.data.data;
-
-      setPosts((prev) => {
-        const uniquePosts = [...prev, ...newPosts].filter(
-          (post, index, self) =>
-            index === self.findIndex((p) => p.id === post.id),
-        );
-        return uniquePosts;
-      });
+      setHasMore(response.data.nextCursor);
       setCursor(response.data.nextCursor);
-
-      if (!response.data.nextCursor) {
-        setHasMore(false);
-      }
+      setPosts((prev) => [...prev, ...response.data.data]);
+      console.log(posts);
     } catch (err) {
       console.error("게시물을 불러오지 못했어!", err);
     } finally {
       setIsLoading(false);
     }
-  }, [cursor, hasMore, isLoading]);
+  };
+
+  const isMount = useRef(true);
 
   useEffect(() => {
-    fetchPosts();
+    if (isMount.current) {
+      isMount.current = false;
+      fetchPosts();
+    }
   }, []);
 
   useEffect(() => {
-    if (!hasMore) return;
+    if (!hasMore || isLoading) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting && hasMore) {
+        if (entries[0]?.isIntersecting) {
           fetchPosts();
         }
       },
@@ -60,7 +54,7 @@ export default function PostList() {
     }
 
     return () => observer.disconnect();
-  }, [fetchPosts, hasMore]);
+  }, [hasMore, isLoading]);
 
   if (posts.length === 0 && isLoading) {
     return (
@@ -75,7 +69,6 @@ export default function PostList() {
       </p>
     );
   }
-
   return (
     <div className="w-full grid gap-2 grid-cols-1">
       {posts
